@@ -50,6 +50,36 @@ function App() {
     setIsSigning(false);
   };
 
+  const handleTouchStart = (e) => {
+    setIsSigning(true);
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    setLastX((touch.clientX - rect.left) / scaleFactor);
+    setLastY((touch.clientY - rect.top) / scaleFactor);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isSigning) return;
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const ctx = canvas.getContext("2d");
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(
+      (touch.clientX - rect.left) / scaleFactor,
+      (touch.clientY - rect.top) / scaleFactor
+    );
+    ctx.stroke();
+    setLastX((touch.clientX - rect.left) / scaleFactor);
+    setLastY((touch.clientY - rect.top) / scaleFactor);
+  };
+
+  const handleTouchEnd = () => {
+    setIsSigning(false);
+  };
+
   useEffect(() => {
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
@@ -174,6 +204,9 @@ function App() {
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUp}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
               className="w-full border rounded-md h-fit rounded-tr-none rounded-br-none"
               id="signatureCanvas"
             ></canvas>
