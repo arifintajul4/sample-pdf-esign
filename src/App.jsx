@@ -74,6 +74,8 @@ function App() {
     ctx.stroke();
     setLastX((touch.clientX - rect.left) / scaleFactor);
     setLastY((touch.clientY - rect.top) / scaleFactor);
+
+    e.preventDefault();
   };
 
   const handleTouchEnd = () => {
@@ -207,6 +209,7 @@ function App() {
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
+              onTouchCancel={handleTouchEnd}
               className="w-full border rounded-md h-fit sm:rounded-tr-none sm:rounded-br-none"
               id="signatureCanvas"
             ></canvas>
