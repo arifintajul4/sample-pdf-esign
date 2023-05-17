@@ -235,7 +235,7 @@ function App() {
           {modifiedPdf ? (
             <div style={{ marginTop: "20px" }}>
               <h2>Modified PDF</h2>
-              <div className="flex justify-center border">
+              <div className="flex justify-center border max-w-screen sm:max-w-full overflow-scroll">
                 <Document
                   file={modifiedPdf}
                   onLoadSuccess={onDocumentLoadSuccess}
