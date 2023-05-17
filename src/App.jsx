@@ -183,7 +183,7 @@ function App() {
       <h1 className="font-bold text-center text-2xl mt-2 mb-10">
         Sample PDF E-Sign
       </h1>
-      <div className="max-w-3xl mx-auto space-y-5">
+      <div className="max-w-3xl mx-auto space-y-5 px-4">
         <div>
           <p className="mb-1 font-semibold">Pilih File PDF</p>
           <div className="flex">
@@ -198,7 +198,7 @@ function App() {
         </div>
         <div>
           <p className="mb-1 font-semibold">Tanda Tangan</p>
-          <div className="flex justify-between ">
+          <div className="sm:flex justify-between md:flex">
             <canvas
               ref={canvasRef}
               onMouseDown={handleMouseDown}
@@ -207,20 +207,20 @@ function App() {
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
-              className="w-full border rounded-md h-fit rounded-tr-none rounded-br-none"
+              className="w-full border rounded-md h-fit sm:rounded-tr-none sm:rounded-br-none"
               id="signatureCanvas"
             ></canvas>
             <div className="flex flex-col">
               <button
                 disabled={isLoading || !selectedFile}
                 onClick={handleAddSignature}
-                className="px-4 h-full disabled:bg-gray-300 disabled:cursor-not-allowed py-2 rounded-md border rounded-tl-none rounded-bl-none bg-green-500 text-white"
+                className="px-4 h-full disabled:bg-gray-300 disabled:cursor-not-allowed py-2 rounded-md border sm:rounded-tl-none sm:rounded-bl-none bg-green-500 text-white"
               >
                 Bubuhkan
               </button>
               <button
                 onClick={handleClearSignature}
-                className="px-4 h-full py-2 rounded-md rounded-tl-none rounded-bl-none border bg-red-500 text-white"
+                className="px-4 h-full py-2 rounded-md sm:rounded-tl-none sm:rounded-bl-none border bg-red-500 text-white"
               >
                 Ulangi
               </button>
