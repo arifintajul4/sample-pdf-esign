@@ -199,12 +199,14 @@ function App() {
           {modifiedPdf ? (
             <div style={{ marginTop: "20px" }}>
               <h2>Modified PDF</h2>
-              <Document
-                file={modifiedPdf}
-                onLoadSuccess={onDocumentLoadSuccess}
-              >
-                <Page pageNumber={pageNumber} />
-              </Document>
+              <div className="flex justify-center border">
+                <Document
+                  file={modifiedPdf}
+                  onLoadSuccess={onDocumentLoadSuccess}
+                >
+                  <Page pageNumber={pageNumber} />
+                </Document>
+              </div>
               <div className="flex gap-5 justify-center my-10">
                 <button onClick={goToPrevPage} disabled={pageNumber <= 1}>
                   Previous Page
