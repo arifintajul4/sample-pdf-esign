@@ -210,6 +210,7 @@ function App() {
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
               onTouchCancel={handleTouchEnd}
+              style={{ touchAction: "none" }}
               className="w-full border rounded-md h-fit sm:rounded-tr-none sm:rounded-br-none"
               id="signatureCanvas"
             ></canvas>
