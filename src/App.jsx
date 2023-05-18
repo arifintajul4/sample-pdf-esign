@@ -88,17 +88,10 @@ function App() {
     const scaleX = canvas.offsetWidth / rect.width;
     const scaleY = canvas.offsetHeight / rect.height;
     setScaleFactor(Math.min(scaleX, scaleY));
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
   };
 
   useEffect(() => {
-    window.addEventListener("orientationchange", calculateScaleFactor);
-
-    return () => {
-      // Clean up the event listener when the component is unmounted
-      window.removeEventListener("orientationchange", calculateScaleFactor);
-    };
+    calculateScaleFactor();
   }, []);
 
   const handleClearSignature = () => {
