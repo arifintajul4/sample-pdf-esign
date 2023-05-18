@@ -178,7 +178,7 @@ function App() {
           <div className="sm:flex md:flex">
             <canvas
               ref={canvasRef}
-              width={300}
+              width={330}
               height={200}
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
@@ -195,13 +195,13 @@ function App() {
               <button
                 disabled={isLoading || !selectedFile}
                 onClick={handleAddSignature}
-                className="px-4 w-[300px] sm:w-auto mx-auto h-full disabled:bg-gray-300 disabled:cursor-not-allowed py-2 rounded-md border sm:rounded-tl-none sm:rounded-bl-none bg-green-500 text-white"
+                className="px-4 w-[330px] sm:w-auto mx-auto h-full disabled:bg-gray-300 disabled:cursor-not-allowed py-2 rounded-md border sm:rounded-tl-none sm:rounded-bl-none bg-green-500 text-white"
               >
                 Bubuhkan
               </button>
               <button
                 onClick={handleClearSignature}
-                className="px-4 w-[300px] sm:w-full mx-auto h-full py-2 rounded-md sm:rounded-tl-none sm:rounded-bl-none border bg-red-500 text-white"
+                className="px-4 w-[330px] sm:w-full mx-auto h-full py-2 rounded-md sm:rounded-tl-none sm:rounded-bl-none border bg-red-500 text-white"
               >
                 Ulangi
               </button>
