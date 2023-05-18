@@ -82,7 +82,7 @@ function App() {
     setIsSigning(false);
   };
 
-  useEffect(() => {
+  const calculateScaleFactor = () => {
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.offsetWidth / rect.width;
@@ -90,6 +90,15 @@ function App() {
     setScaleFactor(Math.min(scaleX, scaleY));
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
+  };
+
+  useEffect(() => {
+    window.addEventListener("orientationchange", calculateScaleFactor);
+
+    return () => {
+      // Clean up the event listener when the component is unmounted
+      window.removeEventListener("orientationchange", calculateScaleFactor);
+    };
   }, []);
 
   const handleClearSignature = () => {
