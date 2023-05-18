@@ -213,7 +213,6 @@ function App() {
           <p className="font-semibold">Hasil</p>
           {modifiedPdf ? (
             <div style={{ marginTop: "20px" }}>
-              <h2>Modified PDF</h2>
               <div className="flex justify-center border max-w-screen sm:max-w-full overflow-scroll">
                 <Document
                   file={modifiedPdf}
