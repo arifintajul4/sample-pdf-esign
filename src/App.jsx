@@ -82,16 +82,12 @@ function App() {
     setIsSigning(false);
   };
 
-  const calculateScaleFactor = () => {
+  useEffect(() => {
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.offsetWidth / rect.width;
     const scaleY = canvas.offsetHeight / rect.height;
     setScaleFactor(Math.min(scaleX, scaleY));
-  };
-
-  useEffect(() => {
-    calculateScaleFactor();
   }, []);
 
   const handleClearSignature = () => {
