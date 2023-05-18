@@ -200,8 +200,9 @@ function App() {
                 Bubuhkan
               </button>
               <button
+                disabled={isSigning}
                 onClick={handleClearSignature}
-                className="px-4 w-[330px] sm:w-full mx-auto h-full py-2 rounded-md sm:rounded-tl-none sm:rounded-bl-none border bg-red-500 text-white"
+                className="px-4 w-[330px] sm:w-full disabled:bg-gray-300 disabled:cursor-not-allowed mx-auto h-full py-2 rounded-md sm:rounded-tl-none sm:rounded-bl-none border bg-red-500 text-white"
               >
                 Ulangi
               </button>
