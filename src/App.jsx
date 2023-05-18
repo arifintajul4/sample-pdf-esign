@@ -12,38 +12,29 @@ function App() {
   const [pageNumber, setPageNumber] = useState(1);
   const [numPages, setNumPages] = useState(1);
 
-  const [previewImage, setPreviewImage] = useState("");
-
   const [modifiedPdf, setModifiedPdf] = useState(null);
 
   const canvasRef = useRef(null);
   const [isSigning, setIsSigning] = useState(false);
   const [lastX, setLastX] = useState(0);
   const [lastY, setLastY] = useState(0);
-  const [scaleFactor, setScaleFactor] = useState(1);
 
   const handleMouseDown = (e) => {
     setIsSigning(true);
-    const canvas = canvasRef.current;
-    const rect = canvas.getBoundingClientRect();
-    setLastX((e.clientX - rect.left) / scaleFactor);
-    setLastY((e.clientY - rect.top) / scaleFactor);
+    setLastX(e.nativeEvent.offsetX);
+    setLastY(e.nativeEvent.offsetY);
   };
 
   const handleMouseMove = (e) => {
     if (!isSigning) return;
     const canvas = canvasRef.current;
-    const rect = canvas.getBoundingClientRect();
     const ctx = canvas.getContext("2d");
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
-    ctx.lineTo(
-      (e.clientX - rect.left) / scaleFactor,
-      (e.clientY - rect.top) / scaleFactor
-    );
+    ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
     ctx.stroke();
-    setLastX((e.clientX - rect.left) / scaleFactor);
-    setLastY((e.clientY - rect.top) / scaleFactor);
+    setLastX(e.nativeEvent.offsetX);
+    setLastY(e.nativeEvent.offsetY);
   };
 
   const handleMouseUp = () => {
@@ -55,8 +46,8 @@ function App() {
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
     const touch = e.touches[0];
-    setLastX((touch.clientX - rect.left) / scaleFactor);
-    setLastY((touch.clientY - rect.top) / scaleFactor);
+    setLastX(touch.clientX - rect.left);
+    setLastY(touch.clientY - rect.top);
   };
 
   const handleTouchMove = (e) => {
@@ -67,28 +58,15 @@ function App() {
     const ctx = canvas.getContext("2d");
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
-    ctx.lineTo(
-      (touch.clientX - rect.left) / scaleFactor,
-      (touch.clientY - rect.top) / scaleFactor
-    );
+    ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
     ctx.stroke();
-    setLastX((touch.clientX - rect.left) / scaleFactor);
-    setLastY((touch.clientY - rect.top) / scaleFactor);
-
-    e.preventDefault();
+    setLastX(touch.clientX - rect.left);
+    setLastY(touch.clientY - rect.top);
   };
 
   const handleTouchEnd = () => {
     setIsSigning(false);
   };
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.offsetWidth / rect.width;
-    const scaleY = canvas.offsetHeight / rect.height;
-    setScaleFactor(Math.min(scaleX, scaleY));
-  }, []);
 
   const handleClearSignature = () => {
     const canvas = canvasRef.current;
@@ -175,7 +153,6 @@ function App() {
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
-    console.log(numPages);
   };
 
   return (
@@ -183,7 +160,7 @@ function App() {
       <h1 className="font-bold text-center text-2xl mt-2 mb-10">
         Sample PDF E-Sign
       </h1>
-      <div className="max-w-3xl mx-auto space-y-5 px-4">
+      <div className="sm:max-w-3xl px-5 mx-auto space-y-5">
         <div>
           <p className="mb-1 font-semibold">Pilih File PDF</p>
           <div className="flex">
@@ -198,9 +175,11 @@ function App() {
         </div>
         <div>
           <p className="mb-1 font-semibold">Tanda Tangan</p>
-          <div className="sm:flex justify-between md:flex">
+          <div className="sm:flex md:flex">
             <canvas
               ref={canvasRef}
+              width={300}
+              height={200}
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUp}
@@ -209,20 +188,20 @@ function App() {
               onTouchEnd={handleTouchEnd}
               onTouchCancel={handleTouchEnd}
               style={{ touchAction: "none" }}
-              className="w-full border rounded-md h-fit sm:rounded-tr-none sm:rounded-br-none"
+              className=" border rounded-md mx-auto sm:m-0 sm:rounded-tr-none sm:rounded-br-none"
               id="signatureCanvas"
             ></canvas>
             <div className="flex flex-col">
               <button
                 disabled={isLoading || !selectedFile}
                 onClick={handleAddSignature}
-                className="px-4 h-full disabled:bg-gray-300 disabled:cursor-not-allowed py-2 rounded-md border sm:rounded-tl-none sm:rounded-bl-none bg-green-500 text-white"
+                className="px-4 w-[300px] sm:w-auto mx-auto h-full disabled:bg-gray-300 disabled:cursor-not-allowed py-2 rounded-md border sm:rounded-tl-none sm:rounded-bl-none bg-green-500 text-white"
               >
                 Bubuhkan
               </button>
               <button
                 onClick={handleClearSignature}
-                className="px-4 h-full py-2 rounded-md sm:rounded-tl-none sm:rounded-bl-none border bg-red-500 text-white"
+                className="px-4 w-[300px] sm:w-full mx-auto h-full py-2 rounded-md sm:rounded-tl-none sm:rounded-bl-none border bg-red-500 text-white"
               >
                 Ulangi
               </button>
